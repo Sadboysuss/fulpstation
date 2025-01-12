@@ -60,7 +60,7 @@
 	desc = "Quite the sticky situation..."
 	icon_state = "sticky_arrow_projectile"
 	damage = 30
-	speed = 1.3
+	speed = 0.75
 	range = 20
 	embed_type = /datum/embed_data/arrow/sticky
 

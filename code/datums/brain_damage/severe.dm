@@ -399,23 +399,19 @@
 	var/scratch_damage = 0.5
 
 /datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	if(owner.incapacitated)
+	// Jumpsuits ruin the "perfection" of the body
+	if(!owner.get_item_by_slot(ITEM_SLOT_ICLOTHING))
 		return
 
 	// Scratching code
 	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(!bodypart || !IS_ORGANIC_LIMB(bodypart) || (bodypart.bodypart_flags & BODYPART_PSEUDOPART))
+	if(!(bodypart && IS_ORGANIC_LIMB(bodypart)) && bodypart.bodypart_flags & BODYPART_PSEUDOPART)
 		return
-	if(!ishuman(owner))
+	if(owner.incapacitated)
 		return
-	// Jumpsuits ruin the "perfection" of the body
-	var/mob/living/carbon/human/scratcher = owner
-	if(!length(scratcher.get_clothing_on_part(bodypart)))
-		return
-
-	owner.apply_damage(scratch_damage, BRUTE, bodypart)
+	bodypart.receive_damage(scratch_damage)
 	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
+		to_chat(owner, span_notice("You scratch furiously at the clothed [bodypart]!"))
 
 // This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
 /datum/brain_trauma/severe/rusting

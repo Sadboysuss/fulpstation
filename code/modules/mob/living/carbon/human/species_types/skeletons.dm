@@ -24,11 +24,11 @@
 		TRAIT_XENO_IMMUNE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/tongue/bone
-	mutantstomach = /obj/item/organ/stomach/bone
+	mutanttongue = /obj/item/organ/internal/tongue/bone
+	mutantstomach = /obj/item/organ/internal/stomach/bone
 	mutantappendix = null
 	mutantheart = null
-	mutantliver = /obj/item/organ/liver/bone
+	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN

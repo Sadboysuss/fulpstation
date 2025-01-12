@@ -392,7 +392,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
-	default_gravity = STANDARD_GRAVITY
+	has_gravity = TRUE
 	area_flags = NOTELEPORT | HIDDEN_AREA
 	static_lighting = TRUE
 	ambientsounds = list('sound/ambience/ruin/servicebell.ogg')
@@ -483,7 +483,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
-	default_gravity = STANDARD_GRAVITY
+	has_gravity = TRUE
 
 /obj/item/abstracthotelstorage
 	anchored = TRUE
@@ -525,25 +525,25 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	worn_icon_state = "analyzer"
 
 /obj/item/analyzer/hilbertsanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/item/hilbertshotel))
-		return ..()
-	if(!user.CanReach(interacting_with))
-		to_chat(user, span_warning("It's to far away to scan!"))
-		return ITEM_INTERACT_BLOCKING
-	var/obj/item/hilbertshotel/sphere = interacting_with
-	if(sphere.activeRooms.len)
-		to_chat(user, "Currently Occupied Rooms:")
-		for(var/roomnumber in sphere.activeRooms)
-			to_chat(user, roomnumber)
-	else
-		to_chat(user, "No currenty occupied rooms.")
-	if(sphere.storedRooms.len)
-		to_chat(user, "Vacated Rooms:")
-		for(var/roomnumber in sphere.storedRooms)
-			to_chat(user, roomnumber)
-	else
-		to_chat(user, "No vacated rooms.")
-	return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/item/hilbertshotel))
+		if(!Adjacent(interacting_with))
+			to_chat(user, span_warning("It's to far away to scan!"))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/hilbertshotel/sphere = interacting_with
+		if(sphere.activeRooms.len)
+			to_chat(user, "Currently Occupied Rooms:")
+			for(var/roomnumber in sphere.activeRooms)
+				to_chat(user, roomnumber)
+		else
+			to_chat(user, "No currenty occupied rooms.")
+		if(sphere.storedRooms.len)
+			to_chat(user, "Vacated Rooms:")
+			for(var/roomnumber in sphere.storedRooms)
+				to_chat(user, roomnumber)
+		else
+			to_chat(user, "No vacated rooms.")
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/effect/landmark/transport/transport_id/hilbert
 	specific_transport_id = HILBERT_LINE_1

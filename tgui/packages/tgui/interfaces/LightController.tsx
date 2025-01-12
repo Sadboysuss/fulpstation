@@ -1,17 +1,9 @@
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Knob,
-  Section,
-  Slider,
-  Stack,
-  Tabs,
-} from 'tgui-core/components';
 
 import { round } from '../../common/math';
 import { BooleanLike, classes } from '../../common/react';
 import { useBackend } from '../backend';
+import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 enum Direction {

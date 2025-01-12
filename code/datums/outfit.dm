@@ -98,7 +98,7 @@
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
 	  *
-	  * Valid values are a single typepath or list of typepaths
+	  * Format of this list is (typepath, typepath, typepath)
 	  *
 	  * These are all added and returns in the list for get_chamelon_diguise_info proc
 	  */

@@ -2,14 +2,13 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/dualsaber
-	name = "double-bladed energy sword"
-	desc = "Handle with care."
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	icon_state = "dualsaber0"
 	inhand_icon_state = "dualsaber0"
-	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	name = "double-bladed energy sword"
+	desc = "Handle with care."
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -74,9 +73,7 @@
 	set_light_on(FALSE)
 
 /obj/item/dualsaber/get_sharpness()
-	if (!HAS_TRAIT(src, TRAIT_WIELDED))
-		return NONE
-	return ..()
+	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
 
 /obj/item/dualsaber/update_icon_state()
 	icon_state = inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
@@ -87,7 +84,7 @@
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
-		var/obj/item/organ/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/internal/brain/B = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 		B.organ_flags &= ~ORGAN_VITAL //this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!

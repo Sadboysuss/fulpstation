@@ -424,12 +424,12 @@
 ///////////////////////// CLEAR STATUS /////////////////////////
 
 /mob/living/proc/adjust_status_effects_on_shake_up()
-	AdjustStun(-6 SECONDS)
-	AdjustKnockdown(-6 SECONDS)
-	AdjustUnconscious(-6 SECONDS)
-	AdjustSleeping(-10 SECONDS)
-	AdjustParalyzed(-6 SECONDS)
-	AdjustImmobilized(-6 SECONDS)
+	AdjustStun(-60)
+	AdjustKnockdown(-60)
+	AdjustUnconscious(-60)
+	AdjustSleeping(-100)
+	AdjustParalyzed(-60)
+	AdjustImmobilized(-60)
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
@@ -668,7 +668,7 @@
 		return 0
 	// Infinite duration status effects technically are not "timed status effects"
 	// by name or nature, but support is included just in case.
-	if(existing.duration == STATUS_EFFECT_PERMANENT)
+	if(existing.duration == -1)
 		return INFINITY
 
 	return existing.duration - world.time

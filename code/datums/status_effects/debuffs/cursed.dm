@@ -31,8 +31,6 @@
 /datum/status_effect/grouped/cursed/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON)
 	branded_hand = null
-	if (smoke_path)
-		owner.remove_shared_particles(smoke_path)
 	return ..()
 
 /// Checks the number of curses we have and returns information back to the slot machine. `max_curse_amount` is set by the slot machine itself.
@@ -125,6 +123,7 @@
 		span_notice("The smoke slowly clears from [owner.name]..."),
 		span_notice("Your skin finally settles down and your throat no longer feels as dry... The brand disappearing confirms that the curse has been lifted."),
 	)
+	QDEL_NULL(particle_effect)
 	qdel(src)
 
 /// If our owner's stat changes, rapidly surge the damage chance.
@@ -141,8 +140,10 @@
 /datum/status_effect/grouped/cursed/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
 
-	if(!gibbed && smoke_path)
-		owner.remove_shared_particles(smoke_path)
+	if(gibbed)
+		return
+
+	QDEL_NULL(particle_effect)
 
 /datum/status_effect/grouped/cursed/update_particles()
 	var/particle_path = /particles/smoke/steam/mild
@@ -155,10 +156,9 @@
 	if(smoke_path == particle_path)
 		return
 
-	if (smoke_path)
-		owner.remove_shared_particles(smoke_path)
-	owner.add_shared_particles(particle_path)
+	QDEL_NULL(particle_effect)
 	smoke_path = particle_path
+	particle_effect = new(owner, particle_path)
 
 /datum/status_effect/grouped/cursed/tick(seconds_between_ticks)
 	if(curse_count <= 1)

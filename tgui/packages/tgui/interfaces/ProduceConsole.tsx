@@ -8,8 +8,8 @@ import {
   Button,
   Dimmer,
   Divider,
-  DmIcon,
   Icon,
+  Image,
   Input,
   NumberInput,
   Section,
@@ -26,8 +26,7 @@ type OrderDatum = {
   cat: string;
   ref: string;
   cost: number;
-  icon: string;
-  icon_state: string;
+  product_icon: string;
 };
 
 type Item = {
@@ -118,8 +117,8 @@ const ShoppingTab = (props) => {
         <Section fill scrollable>
           <Stack vertical mt={-2}>
             <Divider />
-            {goods.map((item) => (
-              <Stack.Item key={item.ref}>
+            {goods.map((item, key) => (
+              <Stack.Item key={key}>
                 <Stack>
                   <span
                     style={{
@@ -128,18 +127,18 @@ const ShoppingTab = (props) => {
                   />{' '}
                   {!condensed && (
                     <Stack.Item>
-                      <DmIcon
-                        icon={item.icon}
-                        icon_state={item.icon_state}
-                        verticalAlign="middle"
-                        height={'36px'}
-                        width={'36px'}
-                        fallback={<Icon name="spinner" size={2} spin />}
+                      <Image
+                        src={`data:image/jpeg;base64,${item.product_icon}`}
+                        height="34px"
+                        width="34px"
+                        style={{
+                          verticalAlign: 'middle',
+                        }}
                       />
                     </Stack.Item>
                   )}
-                  <Stack.Item grow>{capitalize(item.name)}</Stack.Item>
-                  <Stack.Item color="label" fontSize="10px">
+                  <Stack.Item>{capitalize(item.name)}</Stack.Item>
+                  <Stack.Item grow color="label" fontSize="10px">
                     <Button
                       mt={-1}
                       color="transparent"

@@ -55,7 +55,7 @@
 
 /datum/status_effect/freon/lasting
 	id = "lasting_frozen"
-	duration = STATUS_EFFECT_PERMANENT
+	duration = -1
 
 /datum/status_effect/hypernob_protection
 	id = "hypernob_protection"

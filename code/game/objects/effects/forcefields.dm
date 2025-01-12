@@ -84,7 +84,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "cosmic_carpet"
 	anchored = TRUE
-	layer = GIB_LAYER
+	layer = BELOW_OBJ_LAYER
 	density = FALSE
 	can_atmos_pass = ATMOS_PASS_NO
 	initial_duration = 30 SECONDS

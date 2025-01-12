@@ -1,15 +1,8 @@
 import { paginate } from 'common/collections';
-import {
-  Button,
-  Icon,
-  Input,
-  Section,
-  Stack,
-  Tabs,
-} from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import { BooleanLike } from 'common/react';
 
 import { useBackend, useLocalState } from '../backend';
+import { Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const CATEGORY_PAGE_ITEMS = 4;

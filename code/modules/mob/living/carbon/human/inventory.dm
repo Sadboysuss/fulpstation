@@ -424,7 +424,7 @@
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
 			var/path = /obj/item/bodypart/arm/left
-			if(IS_RIGHT_INDEX(i))
+			if(!(i % 2))
 				path = /obj/item/bodypart/arm/right
 
 			var/obj/item/bodypart/BP = new path ()

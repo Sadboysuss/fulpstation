@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_RAPTOR_MOTHERLY = "Motherly",
 	BB_RAPTOR_PLAYFUL = "Playful",
 	BB_RAPTOR_COWARD = "Coward",
+	BB_RAPTOR_TROUBLE_MAKER = "Trouble Maker",
 ))
 
 GLOBAL_LIST_EMPTY(raptor_population)
@@ -47,13 +48,11 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/ridable_component = /datum/component/riding/creature/raptor
 	//pet commands when we tame the raptor
 	var/static/list/pet_commands = list(
-		/datum/pet_command/breed,
 		/datum/pet_command/idle,
-		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/attack,
+		/datum/pet_command/point_targeting/attack,
 		/datum/pet_command/follow,
-		/datum/pet_command/fetch,
+		/datum/pet_command/point_targeting/fetch,
 	)
 	///things we inherited from our parent
 	var/datum/raptor_inheritance/inherited_stats
@@ -71,7 +70,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		change_offsets = FALSE
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 
-	AddElement(/datum/element/wears_collar)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 
 	if(!mapload)
@@ -99,7 +97,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
 	inherited_stats = new
 	inherit_properties()
-	var/list/my_food = string_list(list(/obj/item/stack/ore))
+	var/static/list/my_food = list(/obj/item/stack/ore)
 	AddElement(/datum/element/basic_eating, food_types = my_food)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
@@ -160,8 +158,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
-		UnarmedAttack(ore_food, TRUE, modifiers)
-	return FALSE
+		melee_attack(ore_food)
+	return TRUE
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if(!combat_mode && istype(target, /mob/living/basic/raptor/baby_raptor))

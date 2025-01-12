@@ -48,9 +48,9 @@
 /datum/component/splat/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_SELF_ON_HIT))
 
-/datum/component/splat/proc/projectile_splat(obj/projectile/source, atom/firer, atom/target, angle, hit_limb_zone, blocked, pierce_hit)
+/datum/component/splat/proc/projectile_splat(obj/projectile/source, atom/firer, atom/target, angle, hit_limb_zone, blocked)
 	SIGNAL_HANDLER
-	if(blocked != 100 && !pierce_hit)
+	if(blocked != 100)
 		splat(source, target)
 
 /datum/component/splat/proc/throw_splat(atom/movable/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)

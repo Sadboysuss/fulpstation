@@ -5,7 +5,7 @@
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speed = -0.5
 	health = 16
 	maxHealth = 16

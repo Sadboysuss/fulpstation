@@ -1,5 +1,8 @@
 import { map, sortBy } from 'common/collections';
+import { capitalize } from 'common/string';
 import { useState } from 'react';
+
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -10,10 +13,7 @@ import {
   Stack,
   Table,
   TextArea,
-} from 'tgui-core/components';
-import { capitalize } from 'tgui-core/string';
-
-import { useBackend, useLocalState } from '../backend';
+} from '../components';
 import { Window } from '../layouts';
 import { PageSelect } from './LibraryConsole';
 

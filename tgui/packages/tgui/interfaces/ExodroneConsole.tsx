@@ -1,3 +1,4 @@
+import { capitalize } from 'common/string';
 import {
   createContext,
   Fragment,
@@ -5,6 +6,10 @@ import {
   useContext,
   useState,
 } from 'react';
+
+import { resolveAsset } from '../assets';
+import nt_logo from '../assets/bg-nanotrasen.svg';
+import { useBackend } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -17,12 +22,7 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from 'tgui-core/components';
-import { capitalize } from 'tgui-core/string';
-
-import { resolveAsset } from '../assets';
-import nt_logo from '../assets/bg-nanotrasen.svg';
-import { useBackend } from '../backend';
+} from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 

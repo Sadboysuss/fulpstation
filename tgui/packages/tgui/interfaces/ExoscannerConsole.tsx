@@ -1,3 +1,4 @@
+import { useBackend } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -8,9 +9,7 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from 'tgui-core/components';
-
-import { useBackend } from '../backend';
+} from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 

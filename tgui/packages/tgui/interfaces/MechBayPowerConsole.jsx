@@ -1,12 +1,11 @@
+import { useBackend } from '../backend';
 import {
   Button,
   LabeledList,
   NoticeBox,
   ProgressBar,
   Section,
-} from 'tgui-core/components';
-
-import { useBackend } from '../backend';
+} from '../components';
 import { formatEnergy } from '../format';
 import { Window } from '../layouts';
 

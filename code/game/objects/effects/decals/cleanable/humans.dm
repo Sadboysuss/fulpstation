@@ -75,7 +75,6 @@
 	plane = GAME_PLANE
 	vis_flags = VIS_INHERIT_PLANE
 	alpha = 180
-	is_mopped = FALSE
 
 /obj/effect/decal/cleanable/blood/splatter/over_window/NeverShouldHaveComeHere(turf/here_turf)
 	return isgroundlessturf(here_turf)
@@ -112,7 +111,7 @@
 	desc = "They look bloody and gruesome."
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gib1"
-	layer = GIB_LAYER
+	layer = BELOW_OBJ_LAYER
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
@@ -121,8 +120,6 @@
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
-
-	is_mopped = TRUE // probably shouldn't be, but janitor powercreep
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -275,9 +272,9 @@
 
 	for(var/Ddir in GLOB.cardinals)
 		if(old_entered_dirs & Ddir)
-			entered_dirs |= turn_cardinal(Ddir, ang_change)
+			entered_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
 		if(old_exited_dirs & Ddir)
-			exited_dirs |= turn_cardinal(Ddir, ang_change)
+			exited_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
 
 	update_appearance()
 	return ..()
@@ -359,7 +356,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	random_icon_states = list("hitsplatter1", "hitsplatter2", "hitsplatter3")
 	plane = GAME_PLANE
 	layer = ABOVE_WINDOW_LAYER
-	is_mopped = FALSE
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc
 	/// The cached info about the blood

@@ -526,7 +526,7 @@
 /obj/machinery/smartfridge/drying/proc/toggle_drying(forceoff, mob/user)
 	if(drying || forceoff)
 		drying = FALSE
-		current_user = null
+		current_user = FALSE
 		update_use_power(IDLE_POWER_USE)
 	else
 		drying = TRUE

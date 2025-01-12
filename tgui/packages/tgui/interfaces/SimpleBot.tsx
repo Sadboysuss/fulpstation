@@ -35,7 +35,7 @@ type Settings = {
 
 export function SimpleBot(props) {
   const { data } = useBackend<Data>();
-  const { can_hack, locked } = data;
+  const { can_hack, custom_controls, locked } = data;
   const access = !locked || !!can_hack;
 
   return (
@@ -43,11 +43,25 @@ export function SimpleBot(props) {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
-            <BotSettings />
+            <Section title="Settings" buttons={<TabDisplay />}>
+              {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
+            </Section>
           </Stack.Item>
           {!!access && (
             <Stack.Item grow>
-              <BotControl />
+              <Section fill scrollable title="Controls">
+                <LabeledControls wrap>
+                  {Object.entries(custom_controls).map((control) => (
+                    <LabeledControls.Item
+                      pb={2}
+                      key={control[0]}
+                      label={capitalizeAll(control[0].replace('_', ' '))}
+                    >
+                      <ControlHelper control={control} />
+                    </LabeledControls.Item>
+                  ))}
+                </LabeledControls>
+              </Section>
             </Stack.Item>
           )}
         </Stack>
@@ -56,36 +70,6 @@ export function SimpleBot(props) {
   );
 }
 
-export function BotSettings(props) {
-  const { act, data } = useBackend<Data>();
-  const { can_hack, locked } = data;
-  const access = !locked || !!can_hack;
-  return (
-    <Section title="Settings" buttons={<TabDisplay />}>
-      {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
-    </Section>
-  );
-}
-
-export function BotControl(props) {
-  const { act, data } = useBackend<Data>();
-  const { custom_controls } = data;
-  return (
-    <Section fill scrollable title="Controls">
-      <LabeledControls wrap>
-        {Object.entries(custom_controls).map((control) => (
-          <LabeledControls.Item
-            pb={2}
-            key={control[0]}
-            label={capitalizeAll(control[0].replace('_', ' '))}
-          >
-            <ControlHelper control={control} />
-          </LabeledControls.Item>
-        ))}
-      </LabeledControls>
-    </Section>
-  );
-}
 /** Creates a lock button at the top of the controls */
 function TabDisplay(props) {
   const { act, data } = useBackend<Data>();

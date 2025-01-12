@@ -57,12 +57,6 @@
 	icon_state = "firing_effect"
 	duration = 3
 
-/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
-	. = ..()
-	if (ismovable(loc))
-		var/atom/movable/spawned_inside = loc
-		spawned_inside.vis_contents += src
-
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
@@ -251,7 +245,7 @@
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "heavy"
+	icon_state = "3"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
@@ -304,6 +298,14 @@
 
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
+
+/obj/effect/temp_visual/dust_animation
+	icon = 'icons/mob/simple/mob.dmi'
+	duration = 15
+
+/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
+	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
+	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'
@@ -443,7 +445,8 @@
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
-		size_matrix = matrix() * (size_calc_target.get_visual_height() / ICON_SIZE_Y)
+		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
+		size_matrix = matrix() * (I.Height()/ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
